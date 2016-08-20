@@ -1,11 +1,10 @@
 let upperBound = 4000000
-let rec fib a b sum =
-  if b > upperBound then
-    sum
-  else
-    if b % 2 = 0 then
-      fib (b) (a+b) (b+sum)
-    else
-      fib (b) (a+b) (sum)
 
-fib 1 2 0
+let fibSeq = Seq.unfold(fun (a,b) -> Some (a, (b, a+b))) (0, 1)
+let total = 
+    fibSeq 
+    |> Seq.takeWhile(fun x -> x <= upperBound) 
+    |> Seq.filter(fun n -> n % 2 = 0)
+    |> Seq.sum
+
+sprintf "%i" total
